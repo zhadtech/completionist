@@ -27,7 +27,7 @@ const START_DATE = START_DATE_ARG
   : moment().subtract(52, "weeks").startOf("isoWeek");
 
 // Commits per marked day (same day, multiple commits for intensity on the graph)
-const COMMITS_PER_DAY = parseInt(process.env.COMMITS_PER_DAY || "10", 10);
+const COMMITS_PER_DAY = parseInt(process.env.COMMITS_PER_DAY || "20", 10);
 
 // Set to true to only print commits (dry run); false to actually commit and push
 const DRY_RUN = process.env.DRY_RUN === "1";
