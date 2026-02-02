@@ -58,6 +58,47 @@ COMMITS_PER_DAY=5  node write-graph-message.js    # 5 commits per marked day
 DRY_RUN=1          node write-graph-message.js    # preview only
 ```
 
+## Random commits
+
+**`random-commits.js`** fills the graph with a random schedule: **1–3 commits per day**, on **3–6 random days per week**. You choose when commits can start (and optionally end). No push — you push manually.
+
+**Dry run (preview schedule and commit messages only):**
+
+```bash
+npm run random:dry
+# or with a start date (default: 52 weeks ago → today)
+DRY_RUN=1 node random-commits.js 2025-01-06
+```
+
+**Run for real (creates commits; no push):**
+
+```bash
+npm run random
+# or with args
+node random-commits.js 2025-01-06
+```
+
+**Arguments:**
+
+| Arg | Description |
+|-----|-------------|
+| `startDate` | First day commits are allowed (e.g. `2025-01-06`). Default: 52 weeks ago. |
+| `endDate` | Optional. An ISO date, or a **number** = weeks from start. Omit to use today. |
+
+Examples:
+
+```bash
+DRY_RUN=1 node random-commits.js 2025-01-06           # dry run, start Jan 6, end today
+DRY_RUN=1 node random-commits.js 2025-01-06 12        # dry run, 12 weeks from Jan 6
+node random-commits.js 2025-01-06 2025-03-31          # real run, Jan 6 through Mar 31
+```
+
+**Options (env):**
+
+| Env | Description |
+|-----|-------------|
+| `DRY_RUN=1` | Preview when commits will happen and what will be committed; no writes, no commits. |
+
 ## CSV format
 
 - **Path:** `binary.csv`
@@ -74,8 +115,11 @@ Create or edit `binary.csv` (e.g. in a spreadsheet or by hand), then run the scr
 | `graph` | `node write-graph-message.js` | Draw the graph from `binary.csv` (default start: 52 weeks ago). |
 | `graph:dry` | `DRY_RUN=1 node write-graph-message.js` | Preview commit count and date range only. |
 | `graph:from` | `node write-graph-message.js` | Same as `graph`; pass a date as an extra arg, e.g. `npm run graph:from -- 2024-01-01`. |
+| `random` | `node random-commits.js` | Random schedule (1–3 commits/day, 3–6 days/week); pass start [end] as args. |
+| `random:dry` | `DRY_RUN=1 node random-commits.js` | Preview random schedule and commit messages; no commits. |
 
 ## Other
 
 - **`script.js`** — older script that makes random commits on the graph (no CSV); kept for reference.
+- **`random-commits.js`** — random schedule (1–3 commits/day, 3–6 days/week) with configurable start and dry run; see [Random commits](#random-commits).
 - **`data.json`** — file that gets updated on each commit (used as commit payload).
