@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "graph:dry": "DRY_RUN=1 node write-graph-message.js",
+    "graph": "node write-graph-message.js",
+    "graph:from": "node write-graph-message.js"
   },
   "keywords": [],
   "author": "",
