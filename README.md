@@ -1,12 +1,19 @@
 # completionist
 
-Draw a message or pattern on your GitHub contribution graph by turning a CSV grid into backdated commits.
+Draw a message or pattern on your GitHub contribution graph by turning a CSV grid into backdated commits, or randomize and populate your graph with a natural-looking schedule.
+
+## Two main functions
+
+| Script | Purpose |
+|--------|---------|
+| **`write-graph-message.js`** | Draw a message or pattern on the GitHub contribution graph. Reads `binary.csv` (7×N grid: 1 = commit, 0 = skip) and creates backdated commits so they appear on the right days. |
+| **`random-commits.js`** | Fill the graph with a random schedule: 3–6 days per week, 1–3 commits per day, over a date range you choose. Backdated commits; you push manually. |
 
 ## How it works
 
 - **`binary.csv`** is a 7×N grid: 7 rows (one per day of the week), N columns (one per week).
 - **1** = make commits on that day; **0** = no commits.
-- **`write-graph-message.js`** reads the CSV and creates Git commits with `--date` set so they appear on the right day in GitHub’s graph.
+- **`write-graph-message.js`** reads the CSV and creates Git commits with `--date` set so they appear on the correct day in GitHub’s graph (push is commented out in the script; push manually if desired).
 
 GitHub’s graph uses **Sunday as the top row** and **Saturday as the bottom row**. The script maps CSV row 0 → Sunday, row 1 → Monday, … row 6 → Saturday. Each CSV column is one week; the first column is the Monday of the week you choose as the start date.
 
@@ -26,7 +33,7 @@ npm run graph:dry
 DRY_RUN=1 node write-graph-message.js
 ```
 
-**Run for real (creates commits and pushes):**
+**Run for real (creates commits; push manually):**
 
 ```bash
 npm run graph
@@ -49,7 +56,7 @@ If you omit the date, the script uses **52 weeks ago** so the pattern fits in th
 | Env | Default | Description |
 |-----|---------|-------------|
 | `DRY_RUN` | — | Set to `1` to only print how many commits and the date range; no Git writes. |
-| `COMMITS_PER_DAY` | `10` | Number of commits to make for each marked day (darker green on the graph). |
+| `COMMITS_PER_DAY` | `20` | Number of commits to make for each marked day (darker green on the graph). |
 
 Examples:
 
@@ -120,6 +127,4 @@ Create or edit `binary.csv` (e.g. in a spreadsheet or by hand), then run the scr
 
 ## Other
 
-- **`script.js`** — older script that makes random commits on the graph (no CSV); kept for reference.
-- **`random-commits.js`** — random schedule (1–3 commits/day, 3–6 days/week) with configurable start and dry run; see [Random commits](#random-commits).
 - **`data.json`** — file that gets updated on each commit (used as commit payload).
